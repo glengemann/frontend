@@ -1,17 +1,17 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import Vue from 'vue';
-import Router from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
+import Explorer from './components/Explorer.vue';
 
-import App from './App.vue';
-import ExploreHomer from './ExploreHomer.vue';
+const routes = [
+  {
+    path: '/reader/:urn',
+    component: Explorer,
+    name: 'reader',
+  },
+];
 
-Vue.use(Router);
-
-export default new Router({
-  mode: 'history',
-  base: '',
-  routes: [
-    { path: '/', component: App, name: 'home' },
-    { path: '/explore-homer/:urn?', component: ExploreHomer, name: 'reader' },
-  ],
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
 });
+
+export default router;
