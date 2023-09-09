@@ -8,7 +8,7 @@
 There is a host environment setup under `./src` that you can run by executing:
 
 ```
-yarn serve
+yarn dev
 ```
 
 This will create a live environment that will auto-reload when changing any
