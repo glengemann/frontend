@@ -54,67 +54,59 @@
       >
     </template>
     <template v-else-if="dictionaryEntriesMode">
-      <span :title="token.lemma" class="text">{{ value }}</span>
+      <span :title="token.lemma" class="text">{{ token.value }}</span
+      >{{ ' ' }}
     </template>
     <template v-else>
-      <span class="text">{{ value }}</span>
+      <span class="text">{{ token.value }}</span
+      >{{ ' ' }}
     </template>
   </span>
 </template>
 
 <script>
   import {
-    MODULE_NS,
-    SELECT_TOKEN,
-    CLEAR_NAMED_ENTITIES,
-    SELECT_NAMED_ENTITIES,
-    CLEAR_GRAMMATICAL_ENTRIES,
-    SELECT_GRAMMATICAL_ENTRIES,
-    SET_SELECTED_LEMMAS,
-    SET_SELECTED_COMMENTARIES,
     SHOW_TRANSLITERATION,
     SHOW_LEMMA,
     SHOW_RELATIONSHIP,
     SHOW_MORPH_TAG,
     SHOW_GRAMMATICAL_TAGS,
     SHOW_GLOSS,
-  } from '@scaife-viewer/store';
+  } from '@scaife-viewer/stores';
+  import { mapStores } from 'pinia';
+  import useScaifeStore from '@scaife-viewer/stores';
 
   export default {
     props: ['token'],
     methods: {
       onSelect() {
         if (this.selected) {
-          this.$store.dispatch(`${MODULE_NS}/${CLEAR_NAMED_ENTITIES}`);
-          this.$store.dispatch(`${MODULE_NS}/${CLEAR_GRAMMATICAL_ENTRIES}`);
-          this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
-            token: null,
-          });
-          this.$store.commit(`${MODULE_NS}/${SET_SELECTED_LEMMAS}`, {
-            lemmas: null,
-          });
-          this.$store.dispatch(`${MODULE_NS}/${SET_SELECTED_COMMENTARIES}`, {
+          this.scaifeStore.clearNamedEntities();
+          this.scaifeStore.clearGrammaticalEntries();
+          this.scaifeStore.selectToken({ token: null });
+          this.scaifeStore.setSelectedLemmas({ lemmas: null });
+          this.scaifeStore.setSelectedCommentaries({
             commentaries: this.commentaries,
           });
         } else {
-          this.$store.dispatch(`${MODULE_NS}/${SELECT_NAMED_ENTITIES}`, {
+          this.scaifeStore.selectNamedEntities({
             entities: this.entities,
           });
-          this.$store.dispatch(`${MODULE_NS}/${SELECT_GRAMMATICAL_ENTRIES}`, {
+          this.scaifeStore.selectGrammaticalEntries({
             entries: this.grammaticalEntries,
           });
           // FIXME: Refactor this with lemma for selection
-          this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
+          this.scaifeStore.selectToken({
             token: this.token,
           });
-          this.$store.dispatch(`${MODULE_NS}/${SET_SELECTED_COMMENTARIES}`, {
+          this.scaifeStore.setSelectedCommentaries({
             commentaries: this.commentaries,
           });
         }
       },
       showAnnotation(propertyName) {
         return this.interlinearMode
-          ? this.$store.state[MODULE_NS][propertyName]
+          ? this.scaifeStore[propertyName]
           : false;
       },
     },
@@ -130,11 +122,7 @@
       };
     },
     computed: {
-      value() {
-        return this.token.spaceAfter
-          ? `${this.token.value} `
-          : this.token.value;
-      },
+      ...mapStores(useScaifeStore),
       commentary() {
         // NOTE: backwards-compatible with SV 1
         return this.commentariesMode;
@@ -145,26 +133,26 @@
         return this.token.veRef;
       },
       selectedEntities() {
-        return this.$store.state[MODULE_NS].selectedNamedEntities;
+        return this.scaifeStore.selectedNamedEntities;
       },
       selectedGrammaticalEntries() {
-        return this.$store.state[MODULE_NS].selectedGrammaticalEntries;
+        return this.scaifeStore.selectedGrammaticalEntries;
       },
       interlinearMode() {
-        return this.$store.getters[`${MODULE_NS}/interlinearMode`];
+        return this.scaifeStore.interlinearMode;
       },
       grammaticalEntriesMode() {
-        return this.$store.getters[`${MODULE_NS}/grammaticalEntriesMode`];
+        return this.scaifeStore.grammaticalEntriesMode;
       },
       namedEntitiesMode() {
-        return this.$store.getters[`${MODULE_NS}/namedEntitiesMode`];
+        return this.scaifeStore.namedEntitiesMode;
       },
       dictionaryEntriesMode() {
-        return this.$store.getters[`${MODULE_NS}/dictionaryEntriesMode`];
+        return this.scaifeStore.dictionaryEntriesMode;
       },
       // TODO: Splat from store; revisit docs
       commentariesMode() {
-        return this.$store.getters[`${MODULE_NS}/commentariesMode`];
+        return this.scaifeStore.commentariesMode;
       },
       entities() {
         return (this.token && this.token.entities) || [];
@@ -218,23 +206,23 @@
         return this.selectedToken.veRef === this.token.veRef;
       },
       selectedToken() {
-        return this.$store.state[MODULE_NS].selectedToken;
+        return this.scaifeStore.selectedToken;
       },
       passage() {
-        return this.$store.getters[`${MODULE_NS}/passage`];
+        return this.scaifeStore.getPassage;
       },
       hasArabicGlosses() {
         // FIXME: Refactor as a collection level attr
         return this.passage.textGroup === 'tlg0012';
       },
       showCitedLemmas() {
-        return this.$store.state[MODULE_NS].showCitedLemmas;
+        return this.scaifeStore.showCitedLemmas;
       },
       showAvailableLemmas() {
-        return this.$store.state[MODULE_NS].showAvailableLemmas;
+        return this.scaifeStore.showAvailableLemmas;
       },
       showMissingLemmas() {
-        return this.$store.state[MODULE_NS].showMissingLemmas;
+        return this.scaifeStore.showMissingLemmas;
       },
       citedLemma() {
         return (
@@ -260,7 +248,7 @@
         );
       },
       highlightCommentaries() {
-        return this.$store.getters[`${MODULE_NS}/showCommentary`];
+        return this.scaifeStore.showCommentary;
       },
       // syncCommentary() {
       //   // TODO: Integrate this with the "scroll to" affordance
@@ -271,14 +259,14 @@
         if (!this.commentary) {
           return [];
         }
-        const { commentariesHash } = this.$store.state[MODULE_NS];
+        const { commentariesHash } = this.scaifeStore;
         return commentariesHash[this.veRef] || [];
       },
       isCommentary() {
         return this.commentaries.length > 0;
       },
       selectedCommentaries() {
-        return this.$store.state[MODULE_NS].selectedCommentaries || [];
+        return this.scaifeStore.selectedCommentaries || [];
       },
       hasSelectedCommentary() {
         return (

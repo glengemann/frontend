@@ -20,7 +20,6 @@
 
 <script>
   import gql from 'graphql-tag';
-  import { ApolloQuery } from 'vue-apollo';
   import {
     LoaderBall,
     EmptyMessage,
@@ -33,7 +32,7 @@
     readerConfig: {
       label: 'Default',
     },
-    components: { ApolloQuery, LoaderBall, EmptyMessage, ErrorMessage, Reader },
+    components: { LoaderBall, EmptyMessage, ErrorMessage, Reader },
     props: {
       queryVariables: Object,
     },
@@ -53,7 +52,6 @@
                         id
                         veRef
                         value
-                        spaceAfter
                       }
                     }
                   }
@@ -69,11 +67,10 @@
         const textParts = data.passageTextParts.edges.map(textPart => {
           const { id, ref, kind } = textPart.node;
           const tokens = textPart.node.tokens.edges.map(edge => {
-            const { value, veRef, spaceAfter } = edge.node;
+            const { value, veRef } = edge.node;
             return {
               value,
               veRef,
-              spaceAfter,
             };
           });
           return {

@@ -32,7 +32,8 @@
 
 <script>
   import URN, { Icon } from '@scaife-viewer/common';
-  import { MODULE_NS, SELECT_LINE } from '@scaife-viewer/store';
+  import { mapStores } from 'pinia';
+  import useScaifeStore from '@scaife-viewer/stores';
   import ReaderToken from './ReaderToken.vue';
 
   export default {
@@ -40,20 +41,21 @@
     components: { Icon, ReaderToken },
     methods: {
       onLineSelect() {
-        this.$store.dispatch(`${MODULE_NS}/${SELECT_LINE}`, {
+        this.selectLine({
           ref: `${this.urn.version}${this.textPart.ref}`,
         });
       },
     },
     computed: {
+      ...mapStores(useScaifeStore),
       urn() {
         return this.$route.params.urn ? new URN(this.$route.params.urn) : null;
       },
       playingAudio() {
-        if (this.$store.state[MODULE_NS].nowPlaying === null) {
+        if (this.scaifeStore.nowPlaying === null) {
           return false;
         }
-        const parts = this.$store.state[MODULE_NS].nowPlaying.split(':');
+        const parts = this.scaifeStore.nowPlaying.split(':');
         const ref = parts[parts.length - 1];
         return this.textPart.ref === ref;
       },
@@ -61,7 +63,7 @@
         return this.textPart.tokens;
       },
       interlinearMode() {
-        return this.$store.getters[`${MODULE_NS}/interlinearMode`];
+        return this.scaifeStore.interlinearMode;
       },
       metricalHtml() {
         return (
@@ -70,7 +72,7 @@
         );
       },
       metricalMode() {
-        return this.$store.getters[`${MODULE_NS}/metricalMode`];
+        return this.scaifeStore.metricalMode;
       },
       metrical() {
         return this.metricalMode && this.metricalHtml;

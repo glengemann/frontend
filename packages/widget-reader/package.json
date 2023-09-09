@@ -1,6 +1,6 @@
 {
   "name": "@scaife-viewer/widget-reader",
-  "version": "0.5.0-beta.1",
+  "version": "0.6.0-beta.1",
   "main": "src/index.js",
   "publishConfig": {
     "access": "public"
@@ -9,9 +9,10 @@
   "license": "MIT",
   "dependencies": {
     "@scaife-viewer/common": "^0.4.0",
-    "@scaife-viewer/store": "^0.5.0-beta.1",
-    "graphql": "^15.0.0",
-    "graphql-tag": "^2.10.3",
-    "vue-apollo": "^3.0.4"
+    "@scaife-viewer/stores": "^0.6.0-beta.1",
+    "@vue/apollo-components": "^4.0.0-beta.5",
+    "@vue/apollo-option": "^4.0.0-beta.5",
+    "graphql": "^16.8.0",
+    "graphql-tag": "^2.10.3"
   }
 }

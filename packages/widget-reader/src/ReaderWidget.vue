@@ -26,22 +26,15 @@
 
 <script>
   import gql from 'graphql-tag';
-  import { ApolloQuery } from 'vue-apollo';
 
   import URN, { Paginator } from '@scaife-viewer/common';
-  import {
-    MODULE_NS,
-    SET_PASSAGE,
-    UPDATE_METADATA,
-    DISPLAY_MODE_DEFAULT,
-  } from '@scaife-viewer/store';
-
+  import { mapStores } from 'pinia';
+  import useScaifeStore from '@scaife-viewer/stores';
   import PassageLanguageIsRtlMixin from './mixins';
 
   export default {
     mixins: [PassageLanguageIsRtlMixin],
     components: {
-      ApolloQuery,
       Paginator,
     },
     scaifeConfig: {},
@@ -50,11 +43,7 @@
         if (this.urn === null) {
           return;
         }
-        this.$store.dispatch(
-          `${MODULE_NS}/${UPDATE_METADATA}`,
-          { urn: this.urn.version },
-          { root: true },
-        );
+        this.scaifeStore.updateMetadata({ urn: this.urn.version });
       },
       queryUpdate(data) {
         const {
@@ -79,11 +68,7 @@
               this.$parent.$el.scrollTop = 0;
             });
 
-            this.$store.dispatch(
-              `${MODULE_NS}/${SET_PASSAGE}`,
-              { urn: this.urn.toString() },
-              { root: true },
-            );
+            this.scaifeStore.setPassage({ urn: this.urn.toString() });
           }
         },
       },
@@ -110,8 +95,9 @@
       }
     },
     computed: {
+      ...mapStores(useScaifeStore),
       readerComponent() {
-        const displayMode = this.$store.getters[`${MODULE_NS}/displayMode`];
+        const { displayMode } = this.scaifeStore;
         return this.$scaife.config.readerComponents[displayMode];
       },
       query() {
@@ -130,16 +116,16 @@
         return { urn: this.urn === null ? '' : this.urn.absolute };
       },
       namedEntitiesMode() {
-        return this.$store.getters[`${MODULE_NS}/namedEntitiesMode`];
+        return this.scaifeStore.namedEntitiesMode;
       },
       urn() {
-        return this.$store.getters[`${MODULE_NS}/urn`];
+        return this.scaifeStore.urn;
       },
       version() {
-        return this.$store.getters[`${MODULE_NS}/firstPassageUrn`].version;
+        return this.scaifeStore.firstPassageUrn;
       },
       versionMetadata() {
-        return this.$store.state[MODULE_NS].metadata;
+        return this.scaifeStore.metadata;
       },
       passageTitle() {
         return this.versionMetadata ? this.versionMetadata.label : null;
@@ -148,10 +134,7 @@
         return this.namedEntitiesMode;
       },
       isDefaultDisplayMode() {
-        return (
-          this.$store.getters[`${MODULE_NS}/displayMode`] ===
-          DISPLAY_MODE_DEFAULT
-        );
+        return this.scaifeStore.displayMode;
       },
       textDirection() {
         // FIXME: Further localization required across

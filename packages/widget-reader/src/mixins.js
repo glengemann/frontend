@@ -1,4 +1,4 @@
-import { MODULE_NS } from '@scaife-viewer/store';
+import useScaifeStore from "@scaife-viewer/stores";
 
 const RTL_LANGUAGES = new Set(['far']);
 
@@ -6,7 +6,8 @@ const PassageLanguageIsRtlMixin = {
   computed: {
     passageIsRtl() {
       const rtlLanguages = this.$scaife.config.rtlLanguages || RTL_LANGUAGES;
-      const metadata = this.$store.getters[`${MODULE_NS}/metadata`];
+      const scaifeStore = useScaifeStore();
+      const { metadata } = scaifeStore;
       return metadata && rtlLanguages.has(metadata.lang);
     },
   },

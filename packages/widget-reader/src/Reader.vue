@@ -35,7 +35,8 @@
 
 <script>
   import { Attribution, EmptyMessage } from '@scaife-viewer/common';
-  import { MODULE_NS } from '@scaife-viewer/store';
+  import { mapStores } from 'pinia';
+  import useScaifeStore from '@scaife-viewer/stores';
   import ReaderTextPart from './ReaderTextPart.vue';
   import PassageLanguageIsRtlMixin from './mixins';
 
@@ -44,20 +45,21 @@
     components: { Attribution, EmptyMessage, ReaderTextPart },
     props: ['textParts'],
     computed: {
+      ...mapStores(useScaifeStore),
       textSize() {
-        return this.$store.state[MODULE_NS].readerTextSize;
+        return this.scaifeStore.readerTextSize;
       },
       textWidth() {
-        return this.$store.state[MODULE_NS].readerTextWidth;
+        return this.scaifeStore.readerTextWidth;
       },
       textDirection() {
         return this.passageIsRtl ? 'rtl' : 'ltr';
       },
       metricalMode() {
-        return this.$store.getters[`${MODULE_NS}/metricalMode`];
+        return this.scaifeStore.metricalMode;
       },
       grammaticalEntriesMode() {
-        return this.$store.getters[`${MODULE_NS}/grammaticalEntriesMode`];
+        return this.scaifeStore.grammaticalEntriesMode;
       },
       showMetricalCredit() {
         if (!this.metricalMode) {
