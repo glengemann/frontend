@@ -54,7 +54,6 @@ const useScaifeStore = defineStore('scaife', {
     firstPassageUrn: state =>
       state.metadata ? new URN(state.metadata.firstPassageUrn) : null,
     urn() {
-      console.log('ScaiferStore:getters::urn')
       if (!this.router?.currentRoute) {
         return this.firstPassageUrn;
       }
@@ -96,7 +95,6 @@ const useScaifeStore = defineStore('scaife', {
   },
   actions: {
     fetchLibrary() {
-      console.log('fetchLibrary');
       this.client
         .query({
           query: gql`
@@ -116,7 +114,6 @@ const useScaifeStore = defineStore('scaife', {
         });
     },
     fetchMetadata() {
-      console.log('fetchMetadata');
       this.client
         .query({
           query: gql`
@@ -139,7 +136,6 @@ const useScaifeStore = defineStore('scaife', {
         );
     },
     updateMetadata({ urn }) {
-      console.log('ScaiferStore::updateMetadata')
       this.client
         .query({
           query: gql`
