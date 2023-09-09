@@ -1,6 +1,6 @@
 {
   "name": "@scaife-viewer/common",
-  "version": "0.4.0",
+  "version": "0.6.0-beta.1",
   "main": "src/index.js",
   "publishConfig": {
     "access": "public"
@@ -8,10 +8,9 @@
   "author": "Eldarion",
   "license": "MIT",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.28",
-    "@fortawesome/free-solid-svg-icons": "^5.14.0",
-    "@fortawesome/vue-fontawesome": "^0.1.8",
-    "@scaife-viewer/store": "^0.5.0-beta.1",
-    "lodash.debounce": "^4.0.8"
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@scaife-viewer/stores": "^0.6.0-beta.1"
   }
 }

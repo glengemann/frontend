@@ -6,7 +6,7 @@ import {
   SHOW_MORPH_TAG,
   SHOW_GRAMMATICAL_TAGS,
   SHOW_GLOSS,
-} from '@scaife-viewer/store';
+} from '@scaife-viewer/stores';
 
 // eslint-disable-next-line import/prefer-default-export
 export const TOKEN_ANNOTATION_TOGGLES = new Map([
