@@ -1,0 +1,24 @@
+import {
+  DISPLAY_MODE_DEFAULT,
+  SHOW_TRANSLITERATION,
+  SHOW_LEMMA,
+  SHOW_RELATIONSHIP,
+  SHOW_MORPH_TAG,
+  SHOW_GRAMMATICAL_TAGS,
+  SHOW_GLOSS,
+} from './constans';
+
+import useScaifeStore from './ScaifeStore';
+
+export default useScaifeStore;
+
+export {
+  DISPLAY_MODE_DEFAULT,
+  SHOW_TRANSLITERATION,
+  SHOW_LEMMA,
+  SHOW_RELATIONSHIP,
+  SHOW_MORPH_TAG,
+  SHOW_GRAMMATICAL_TAGS,
+  SHOW_GLOSS,
+};
+
