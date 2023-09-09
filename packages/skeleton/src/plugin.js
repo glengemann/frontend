@@ -48,12 +48,12 @@ const install = (Vue, options) => {
   install.installed = true;
 
   // eslint-disable-next-line no-param-reassign
-  Vue.prototype.$scaife = Vue.prototype.$scaife || {};
+  Vue.config.globalProperties.$scaife = Vue.config.globalProperties.$scaife || {};
   // eslint-disable-next-line no-param-reassign
   const additionalIconMap = options.iconMap || {};
   // eslint-disable-next-line no-param-reassign
-  Vue.prototype.$scaife = {
-    ...Vue.prototype.$scaife,
+  Vue.config.globalProperties.$scaife = {
+    ...Vue.config.globalProperties.$scaife,
     skeleton: new Skeleton(options.widgets || []),
     config: options.config || {},
     iconMap: {

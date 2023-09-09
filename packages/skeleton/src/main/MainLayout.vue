@@ -20,20 +20,17 @@
         :options="widgetOptions"
         @change-widget="widget => $emit('change-widget', widget)"
       />
-      <component
-        slot="body"
-        :is="widget"
-        v-show="!editing"
-        v-if="widget !== null"
-      />
+      <template v-slot:body>
+        <component :is="widget" v-show="!editing" v-if="widget !== null" />
+      </template>
     </MainWidget>
   </div>
 </template>
 
 <script>
-  import { MODULE_NS } from '@scaife-viewer/store';
   import { displayName } from '@scaife-viewer/common';
-
+  import useScaifeStore from '@scaife-viewer/stores';
+  import { mapStores } from 'pinia';
   import EditLayoutButton from './EditLayoutButton.vue';
   import MainWidget from './MainWidget.vue';
   import WidgetEditor from '../editor/WidgetEditor.vue';
@@ -46,13 +43,14 @@
       WidgetEditor,
     },
     computed: {
+      ...mapStores(useScaifeStore),
       widgetHeader() {
         return this.widget
           ? displayName(this.widget.scaifeConfig.displayName)
           : '';
       },
       flexSize() {
-        return this.$store.state[MODULE_NS].mainLayoutFlexClass;
+        return this.scaifeStore.mainLayoutFlexClass;
       },
     },
   };

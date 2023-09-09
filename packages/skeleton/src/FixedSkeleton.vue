@@ -43,8 +43,10 @@
     TOGGLE_RIGHT_SIDEBAR,
   } from '@scaife-viewer/store';
 
+  import useScaifeStore from '@scaife-viewer/stores';
   import MainLayout from './main/MainLayout.vue';
   import SidebarLayout from './sidebar/SidebarLayout.vue';
+  import {mapStores} from 'pinia';
 
   export default {
     props: ['mainWidget', 'leftWidgets', 'rightWidgets'],
@@ -77,17 +79,18 @@
       },
     },
     computed: {
+      ...mapStores(useScaifeStore),
       leftOpen() {
-        return this.$store.state[MODULE_NS].leftOpen;
+        return this.scaifeStore.leftOpen;
       },
       rightOpen() {
-        return this.$store.state[MODULE_NS].rightOpen;
+        return this.scaifeStore.rightOpen;
       },
       leftVisible() {
-        return this.$store.state[MODULE_NS].leftVisible;
+        return this.scaifeStore.leftVisible;
       },
       rightVisible() {
-        return this.$store.state[MODULE_NS].rightVisible;
+        return this.scaifeStore.rightVisible;
       },
       sidebarClasses() {
         return [
@@ -112,8 +115,8 @@
         );
       },
       title() {
-        const { scaife } = this.$store.state;
-        return scaife.metadata && scaife.metadata.label;
+        const { metadata } = this.scaifeStore;
+        return metadata && metadata.label;
       },
     },
   };
