@@ -4,5 +4,9 @@ import pluginRewriteAll from 'vite-plugin-rewrite-all';
 
 export default defineConfig({
   plugins: [vue(), pluginRewriteAll()],
-  base: 'frontend',
+  test: {
+    globals: true,
+    environment: 'happy-dom'
+  }
+  //base: '/frontend/',
 })

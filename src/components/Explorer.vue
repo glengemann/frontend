@@ -1,8 +1,9 @@
 <script>
   import FixedSkeleton from '@scaife-viewer/skeleton';
-  import {mapStores} from "pinia";
+  import { mapStores } from 'pinia';
   import useScaifeStore from '@scaife-viewer/stores';
   import ReaderWidget from '@scaife-viewer/widget-reader';
+  import TOCWidget from '@scaife-viewer/widget-toc';
 
   export default {
     components: {
@@ -11,7 +12,9 @@
     computed: {
       ...mapStores(useScaifeStore),
       left() {
-        return [];
+        return [
+          TOCWidget,
+        ];
       },
       right() {
         return [];
