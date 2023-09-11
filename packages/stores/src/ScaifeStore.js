@@ -184,6 +184,13 @@ const useScaifeStore = defineStore('scaife', {
     setPassage({ urn }) {
       this.passage = urn;
     },
+    //
+    toggleLeftSidebar() {
+      this.leftOpen = !this.leftOpen;
+    },
+    toggleRightSidebar() {
+      this.rightOpen = !this.rightOpen;
+    }
   },
 });
 
