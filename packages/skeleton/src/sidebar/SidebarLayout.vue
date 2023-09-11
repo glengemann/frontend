@@ -10,15 +10,19 @@
           :editing="editing"
           :defaults="widget.scaifeConfig.defaults"
         >
-          <span slot="heading" class="heading">{{
-            displayName(widget.scaifeConfig.displayName)
-          }}</span>
+          <template #heading>
+            <span class="heading">{{
+              displayName(widget.scaifeConfig.displayName)
+            }}</span>
+          </template>
 <!--          <PortalTarget-->
 <!--            v-if="widget.scaifeConfig.portalTarget"-->
 <!--            slot="sticky"-->
 <!--            :name="widget.scaifeConfig.portalTarget"-->
 <!--          />-->
-          <component slot="body" :is="widget" />
+          <template #body>
+            <component :is="widget" />
+          </template>
         </SidebarWidget>
       </div>
       <WidgetEditor
@@ -31,20 +35,26 @@
 </template>
 
 <script>
-  //import { PortalTarget } from 'portal-vue';
+  // import { PortalTarget } from 'portal-vue';
   import { displayName } from '@scaife-viewer/common';
-
+  import useScaifeStore from "@scaife-viewer/stores";
+  import { mapStores } from 'pinia';
   import SidebarWidget from './SidebarWidget.vue';
   import WidgetEditor from '../editor/WidgetEditor.vue';
 
   export default {
+    computed: {
+      ...mapStores(useScaifeStore),
+    },
     props: ['open', 'editing', 'widgets', 'widgetOptions'],
-    components: { WidgetEditor, SidebarWidget,
-      //PortalTarget
+    components: {
+      WidgetEditor,
+      SidebarWidget,
+      // PortalTarget
     },
     methods: {
       displayName(name) {
-        return displayName(name, this.$store.getters, this.$scaife);
+        return displayName(name, this.scaifeStore, this.$scaife);
       },
     },
   };

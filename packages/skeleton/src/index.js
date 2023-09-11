@@ -1,7 +1,7 @@
 import FixedSkeleton from './FixedSkeleton.vue';
 import SkeletonPlugin from './plugin';
 
-export { default as EditableSkeleton } from './EditableSkeleton.vue';
+//export { default as EditableSkeleton } from './EditableSkeleton.vue';
 export { default as SkeletonPlugin } from './plugin';
 export default FixedSkeleton;
 

@@ -1,7 +1,7 @@
 import { Icon, LoaderBall, displayName } from '@scaife-viewer/common';
 
 import FixedSkeleton from './FixedSkeleton.vue';
-import EditableSkeleton from './EditableSkeleton.vue';
+//import EditableSkeleton from './EditableSkeleton.vue';
 
 import iconMap from './icons';
 
@@ -63,7 +63,7 @@ const install = (Vue, options) => {
   };
 
   Vue.component('FixedSkeleton', FixedSkeleton);
-  Vue.component('EditableSkeleton', EditableSkeleton);
+  //Vue.component('EditableSkeleton', EditableSkeleton);
   Vue.component('LoaderBall', LoaderBall);
   Vue.component('Icon', Icon);
 };

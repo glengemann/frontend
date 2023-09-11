@@ -6,14 +6,16 @@
       :class="sidebarClasses"
       :widgets="leftWidgets"
     >
-      <div slot="button-container" class="button-container">
-        <button class="toggle-open" v-if="leftOpen" @click="onLeftToggle">
-          <Icon name="arrow-left" />
-        </button>
-        <button class="toggle-open" v-else @click="onLeftToggle">
-          <Icon name="arrow-right" />
-        </button>
-      </div>
+      <template #button-container class="button-container">
+        <div class="button-container">
+          <button class="toggle-open" v-if="leftOpen" @click="onLeftToggle">
+            <Icon name="arrow-left" />
+          </button>
+          <button class="toggle-open" v-else @click="onLeftToggle">
+            <Icon name="arrow-right" />
+          </button>
+        </div>
+      </template>
     </SidebarLayout>
 
     <MainLayout :widget="mainWidget" :isEditable="isEditable" />
@@ -37,16 +39,10 @@
 </template>
 
 <script>
-  import {
-    MODULE_NS,
-    TOGGLE_LEFT_SIDEBAR,
-    TOGGLE_RIGHT_SIDEBAR,
-  } from '@scaife-viewer/store';
-
   import useScaifeStore from '@scaife-viewer/stores';
   import MainLayout from './main/MainLayout.vue';
   import SidebarLayout from './sidebar/SidebarLayout.vue';
-  import {mapStores} from 'pinia';
+  import { mapStores } from 'pinia';
 
   export default {
     props: ['mainWidget', 'leftWidgets', 'rightWidgets'],
@@ -60,11 +56,11 @@
     methods: {
       onLeftToggle() {
         this.$emit('left-toggle');
-        this.$store.dispatch(`${MODULE_NS}/${TOGGLE_LEFT_SIDEBAR}`);
+        this.scaifeStore.toggleLeftSidebar();
       },
       onRightToggle() {
         this.$emit('right-toggle');
-        this.$store.dispatch(`${MODULE_NS}/${TOGGLE_RIGHT_SIDEBAR}`);
+        this.scaifeStore.toggleRightSidebar();
       },
     },
     watch: {

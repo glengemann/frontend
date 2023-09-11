@@ -8,7 +8,7 @@
   "author": "Eldarion",
   "license": "MIT",
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@scaife-viewer/common": "^0.6.0-beta.1",
     "@scaife-viewer/stores": "^0.6.0-beta.1",
     "portal-vue": "^2.1.7"
