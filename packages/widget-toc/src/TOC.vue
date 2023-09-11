@@ -3,14 +3,14 @@
     <h3>{{ toc.title }}</h3>
     <p class="u-legend">{{ toc.description }}</p>
     <div class="toc-grid" v-if="toc.items.length">
-      <template v-for="(item, index) in toc.items">
-        <span :key="`index-${index}`" class="ref">{{ index + 1 }}.</span>
-        <div :key="`item-${index}`" class="item">
+      <template v-for="(item, index) in toc.items" :key="index">
+        <span class="ref">{{ index + 1 }}.</span>
+        <div class="item">
           <router-link :to="getPayload(item.uri)">
             {{ item.title }}
           </router-link>
           <span v-if="showURNs">
-            <tt>{{ item.uri }}</tt>
+            <code>{{ item.uri }}</code>
           </span>
         </div>
       </template>

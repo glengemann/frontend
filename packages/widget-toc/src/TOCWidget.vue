@@ -7,9 +7,9 @@
         :data="toc"
         @filter-data="filterData"
       />
-      <Icon class="icon" name="home" v-if="showingRootToc" disabled />
+      <Icon class="icon" name="house" v-if="showingRootToc" disabled />
       <router-link class="icon" :to="returnToRootPayload" v-else>
-        <Icon name="home" />
+        <Icon name="house" />
       </router-link>
       <span @click.prevent="toggleURNs">
         <Icon class="icon urn" name="eye" v-if="!showURNs" />
@@ -26,9 +26,11 @@
 </template>
 
 <script>
-  import { Icon, Lookahead } from '@scaife-viewer/common';
-  import { MODULE_NS } from '@scaife-viewer/store';
-
+  import { Icon,
+    Lookahead
+  } from '@scaife-viewer/common';
+  import useScaifeStore from "@scaife-viewer/stores";
+  import { mapStores } from 'pinia';
   import TOC from './TOC.vue';
   import reducers from './reducers';
 
@@ -57,6 +59,7 @@
       };
     },
     computed: {
+      ...mapStores(useScaifeStore),
       context() {
         return this.$route.name;
       },
@@ -64,10 +67,12 @@
         return 'Filter this table of contents...';
       },
       passage() {
-        return this.$store.getters[`${MODULE_NS}/passage`];
+        return this.scaifeStore.getPassage;
+        //return this.$store.getters[`${MODULE_NS}/passage`];
       },
       metadata() {
-        return this.$store.getters[`${MODULE_NS}/metadata`];
+        return this.scaifeStore.metadata;
+        //return this.$store.getters[`${MODULE_NS}/metadata`];
       },
       reducer() {
         return reducers.tocReducer;
