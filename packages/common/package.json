@@ -11,6 +11,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/vue-fontawesome": "^3.0.3",
-    "@scaife-viewer/stores": "^0.6.0-beta.1"
+    "@scaife-viewer/stores": "^0.6.0-beta.1",
+    "lodash.debounce": "^4.0.8"
   }
 }
