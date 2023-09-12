@@ -1,5 +1,4 @@
 import { createApp, h } from 'vue';
-import './style.css';
 import VueApolloComponents from '@vue/apollo-components';
 import pinia from './pinia.config';
 import apolloProvider from './apollo.config.components';
