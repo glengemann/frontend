@@ -1,0 +1,15 @@
+{
+  "name": "@scaife-viewer/stores",
+  "version": "0.6.0-beta.1",
+  "description": "Pinia store for Scaife Viewer",
+  "main": "src/index.js",
+  "author": "Guillermo Lengemann Garcés",
+  "license": "AGPL",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@scaife-viewer/common": "^0.6.0-beta.1",
+    "graphql-tag": "^2.10.3"
+  }
+}
